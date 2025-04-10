@@ -38,7 +38,9 @@ if st.button("Entrar"):
 
         # Redirecionamento baseado no tipo
         tipo = user['tipo']
-        if tipo == 'admin':
+        if tipo == 'Home':
+            st.switch_page("app.py")
+        elif tipo == 'admin':
             st.switch_page("pages/Admin.py")
         elif tipo == 'financeiro':
             st.switch_page("pages/Financeiro.py")
