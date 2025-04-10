@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: boletos_db
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: app123
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./seed.sql:/docker-entrypoint-initdb.d/seed.sql
+    ports:
+      - "3306:3306"
+
+  web:
+    build: .
+    container_name: streamlit-app
+    ports:
+      - "8501:8501"
+    env_file: .env
+    depends_on:
+      - db
+
+volumes:
+  db_data:
